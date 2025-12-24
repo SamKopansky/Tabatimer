@@ -15,7 +15,9 @@
       "Bash(git init:*)",
       "Bash(npx playwright install --with-deps chromium)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(gh:*)",
+      "Bash(npm run build:*)"
     ]
   },
   "enabledMcpjsonServers": [
