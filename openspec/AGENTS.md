@@ -50,11 +50,33 @@ Skip proposal for:
 Track these steps as TODOs and complete them one by one.
 1. **Read proposal.md** - Understand what's being built
 2. **Read design.md** (if exists) - Review technical decisions
-3. **Read tasks.md** - Get implementation checklist
-4. **Implement tasks sequentially** - Complete in order
-5. **Confirm completion** - Ensure every item in `tasks.md` is finished before updating statuses
-6. **Update checklist** - After all work is done, set every task to `- [x]` so the list reflects reality
-7. **Approval gate** - Do not start implementation until the proposal is reviewed and approved
+3. **⚠️ SCALE CHECKPOINT** - Before implementing, pause and assess:
+   - Is this the first instance of a pattern? (first test, first script, first API route, first utility, etc.)
+   - If yes, will there likely be more? (tests, scripts, configs, components)
+   - If yes to both, STOP - design for 10+ instances before proceeding:
+     * Create directory structure/categories
+     * Define naming conventions
+     * Document the pattern in design.md or project.md
+     * Create skeleton/scaffolding
+     * Show examples
+   - Ask yourself: "Where does the 10th one go?" If unclear, the structure isn't ready
+   - See openspec/project.md "Architecture Principles" for detailed guidance
+4. **⚠️ REFACTOR CHECKPOINT** - Before changing existing patterns, pause and assess:
+   - Is this changing something used in 5+ places? (pattern, convention, technology, architecture)
+   - If yes, will incomplete changes break things?
+   - If yes to both, STOP - use the Refactor Framework:
+     * Read `docs/REFACTORING.md` completely
+     * Create discovery document inventorying ALL affected areas
+     * Get user approval of scope before implementing
+     * Create OpenSpec proposal for medium/large refactors
+     * Implement systematically with validation
+   - Ask yourself: "What are ALL the places this touches?" If unclear, discovery isn't complete
+   - See `docs/REFACTORING.md` for complete workflow and triggers
+5. **Read tasks.md** - Get implementation checklist
+6. **Implement tasks sequentially** - Complete in order
+7. **Confirm completion** - Ensure every item in `tasks.md` is finished before updating statuses
+8. **Update checklist** - After all work is done, set every task to `- [x]` so the list reflects reality
+9. **Approval gate** - Do not start implementation until the proposal is reviewed and approved
 
 ### Stage 3: Archiving Changes
 After deployment, create separate PR to:

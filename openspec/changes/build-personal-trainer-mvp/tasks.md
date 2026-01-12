@@ -13,14 +13,14 @@
 - [x] 1.10 Create GitHub repository and initial commit
 
 ## 2. Database Schema and ORM Setup
-- [ ] 2.1 Install and configure Drizzle ORM
-- [ ] 2.2 Create database schema file (users, workouts, exercises, workout_exercises, workout_history, user_preferences)
-- [ ] 2.3 Write initial migration scripts
-- [ ] 2.4 Set up Row Level Security (RLS) policies in Supabase
-- [ ] 2.5 Create seed script for exercise library (minimum 50 exercises)
-- [ ] 2.6 Run migrations on development database
-- [ ] 2.7 Verify RLS policies work correctly with test queries
-- [ ] 2.8 Write database query helper functions with proper typing
+- [x] 2.1 Install and configure Supabase (migrated from Drizzle ORM to Supabase Data API)
+- [x] 2.2 Create database schema file (users, workouts, exercises, workout_exercises, workout_history, user_preferences)
+- [x] 2.3 Write initial migration scripts
+- [x] 2.4 Set up Row Level Security (RLS) policies in Supabase
+- [x] 2.5 Create seed script for exercise library (minimum 50 exercises)
+- [x] 2.6 Run migrations on development database
+- [x] 2.7 Verify RLS policies work correctly with test queries
+- [x] 2.8 Write database query helper functions with proper typing
 
 ## 3. Authentication System
 - [ ] 3.1 Configure Supabase Auth client (server and client components)

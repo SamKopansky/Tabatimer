@@ -155,7 +155,7 @@ Tell the app what you want to do ("30 min leg workout with dumbbells") and it ge
 - **Runtime**: Next.js 14+ App Router (full-stack framework)
 - **API Layer**: Next.js Server Actions + Route Handlers (API routes)
 - **Database**: Supabase (PostgreSQL)
-- **ORM**: Drizzle ORM or Prisma (TypeScript-first, type-safe queries)
+- **Database Client**: Supabase JS Client (TypeScript-first, type-safe queries with RLS)
 - **Authentication**: Supabase Auth (email/password, OAuth, magic links)
 - **AI Integration**:
   - **Development/Testing**: Local models via Ollama (Llama 3, Mistral)
@@ -169,6 +169,52 @@ Tell the app what you want to do ("30 min leg workout with dumbbells") and it ge
 - **Database Hosting**: Supabase (managed PostgreSQL)
 - **Environment Management**: .env.local (development), Vercel env vars (production)
 - **Monitoring**: Vercel Analytics + Supabase Dashboard
+
+### Technology Location Map
+
+Track where core technologies are used. Update this when technologies change.
+
+**Database & Data Layer:**
+- Supabase Client: `src/lib/supabase/` (initialization, client creation)
+- Database Queries: `src/lib/db/queries.ts`, `src/lib/actions/*.ts`
+- Schema Migrations: `supabase/migrations/`
+- Type Definitions: `src/lib/db/database.types.ts` (generated via `npm run db:types`)
+- Seed Data: `supabase/seed.sql` or managed via Edge Functions
+- RLS Policies: Defined in migration files
+
+**Authentication:**
+- Client Setup: `src/lib/supabase/` (server and client instances)
+- Auth Utilities: `src/lib/supabase/auth.ts`
+- Middleware: `src/middleware.ts` (route protection)
+- Session Handling: Server Components use `createServerClient()`
+
+**AI Integration:**
+- Client & Prompts: `src/lib/ai/` (AI clients, prompt templates, utilities)
+- Configuration: `.env.local` (API keys: `ANTHROPIC_API_KEY`, `OLLAMA_BASE_URL`)
+- Type Definitions: `src/lib/ai/types.ts`
+- Server Actions: `src/lib/actions/ai.ts` (workout generation)
+
+**UI Components:**
+- shadcn/ui Components: `src/components/ui/` (base components)
+- Feature Components: `src/components/` (feature-specific components)
+- Layouts: `src/app/` (Next.js app router layouts)
+
+**Styling:**
+- Tailwind Config: `tailwind.config.ts`
+- Global Styles: `src/app/globals.css`
+- Component Styles: Inline Tailwind classes
+
+**Testing:**
+- Unit Tests: `src/**/*.test.ts` (co-located with source)
+- Integration Tests: `src/lib/actions/**/*.test.ts`
+- Infrastructure Tests: `tests/database/` (database, RLS, migrations)
+- E2E Tests: `e2e/` (Playwright tests)
+- Test Utilities: `src/test/helpers/`
+
+**Scripts & Tooling:**
+- Build Scripts: `scripts/` (organized by category)
+- Database Scripts: `npm run db:*` (migrations, types, seed)
+- Package Management: `package.json` (dependencies and scripts)
 
 ## Architecture & Technical Decisions
 
@@ -592,6 +638,144 @@ Git Push → GitHub Actions → Vercel Deploy
   🤖 Generated with Claude Code
   Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
   ```
+
+## Architecture Principles
+
+### Design for the 10th Instance
+When adding the first of something (test, component, route, script, utility), design as if 10 already exist.
+
+**Ask before implementing:**
+- Where will the 2nd, 5th, 10th instance go?
+- What categories/structure will emerge?
+- How will developers find and maintain these?
+- What prevents fragmentation/inconsistency?
+
+### The "One vs Many" Heuristic
+- **Truly one-off**: Simple, inline solutions OK (rare)
+- **First of many**: Requires structure, naming conventions, scalable patterns
+
+### Red Flags Requiring Structure
+When you encounter these situations, STOP and design a scalable structure first:
+
+- Creating a new file type/category (e.g., first test, first script)
+- Adding configuration or tooling
+- Introducing a new concern (testing, validation, migrations, scripts)
+- Pattern others will copy
+- Anything in a shared/common directory
+
+### Scale Checkpoint Questions
+Before implementing the first instance of anything, answer these:
+
+1. **Will there be more of these?**
+   - Tests, scripts, configs, routes, components, utilities
+   - If "probably yes" → design structure now
+   - If "definitely no" → inline is fine
+
+2. **What structure scales to 10+ instances?**
+   - Categories/taxonomy (by type, by feature, by purpose)
+   - Naming conventions (prefixes, suffixes, patterns)
+   - Directory organization (flat vs nested, grouping logic)
+   - Discovery mechanisms (how do people find these?)
+
+3. **How will this be maintained?**
+   - Easy to add new instances without guidance
+   - Clear patterns to follow
+   - Prevents drift and inconsistency
+   - Self-documenting structure
+
+4. **Where does the 10th one go?**
+   - If you can't answer confidently, the structure isn't ready
+   - Don't start implementing until this is clear
+
+### Examples
+
+**✅ Good: First test requires full test taxonomy**
+```
+Situation: Creating first RLS policy test
+
+Bad approach:
+scripts/test-rls.ts  ← Where do more tests go?
+
+Good approach:
+1. Design test taxonomy first
+2. Create directories: tests/database/, src/test/helpers/, e2e/
+3. Document test types (unit, integration, infrastructure, e2e)
+4. Create helper patterns (test-db.ts, fixtures.ts)
+5. Configure test runners (vitest workspace)
+6. Then implement RLS test in tests/database/rls-policies.test.ts
+```
+
+**✅ Good: First API route establishes routing conventions**
+```
+Situation: Adding first API endpoint
+
+Bad approach:
+app/api/generate.ts  ← How do we organize more endpoints?
+
+Good approach:
+1. Design API structure first
+2. Organize by feature: app/api/[feature]/[action]/route.ts
+3. Document naming patterns
+4. Create shared middleware/utils
+5. Then implement: app/api/workouts/generate/route.ts
+```
+
+**✅ Good: First utility function creates category system**
+```
+Situation: Adding time formatting function
+
+Bad approach:
+lib/utils.ts  ← This becomes a junk drawer
+
+Good approach:
+1. Identify utility categories: time, string, array, validation
+2. Create lib/utils/time.ts, lib/utils/string.ts, etc.
+3. Each with co-located tests
+4. Then implement formatDuration in lib/utils/time.ts
+```
+
+### Anti-Patterns to Avoid
+
+- ❌ Single flat directory that will grow (`/scripts/`, `/utils/`)
+- ❌ Numbered files without categories (`test1.ts`, `test2.ts`, `script1.ts`)
+- ❌ "Utils" or "helpers" without subcategories (becomes junk drawer)
+- ❌ One-off solutions without documented patterns
+- ❌ "I'll organize it later when we have more" (you won't)
+- ❌ Copying files without a template/pattern system
+
+### Documentation Requirements
+
+When creating the first instance of a pattern, document:
+
+1. **In design.md or project.md:**
+   - What this category is for
+   - Where new instances go
+   - Naming conventions
+   - Examples
+
+2. **In code:**
+   - README in new directories
+   - Comments in template/example files
+   - Clear file naming that shows the pattern
+
+3. **In specs (if architectural):**
+   - Create openspec/specs/[category]/spec.md
+   - Define requirements for structure
+   - Include scenarios showing usage
+
+### Complexity Triggers
+
+Only add structural complexity when:
+- **Multiple proven instances**: Have 2-3 real examples before abstracting
+- **Clear categories emerge**: Natural groupings are obvious
+- **Maintenance burden exists**: Ad-hoc approach causes confusion
+- **Growth is certain**: You know more are coming
+
+Don't over-engineer:
+- Not everything needs a framework
+- Simple patterns > complex systems
+- Boring solutions > clever architectures
+- Delete code aggressively
 
 ## Development Practices
 
