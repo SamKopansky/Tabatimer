@@ -19,7 +19,7 @@ This is a greenfield implementation creating the full application from scratch.
 
 **Technical Stack:**
 - Frontend: Next.js 14+ App Router, React 18+, TypeScript, Tailwind CSS, shadcn/ui
-- Backend: Next.js Server Actions + Route Handlers, Supabase (PostgreSQL), Drizzle ORM
+- Backend: Next.js Server Actions + Route Handlers, Supabase (PostgreSQL with JS Client)
 - AI: Claude API (production), Ollama local models (development), rule-based fallback
 - Deployment: Vercel (hosting), GitHub Actions (CI/CD)
 
@@ -55,7 +55,7 @@ This is a greenfield implementation creating the full application from scratch.
 
 **Migration Notes:**
 - No migration needed (greenfield project)
-- Initial database schema will be created via Drizzle migrations
+- Initial database schema will be created via Supabase migrations
 - Seed data for exercise library will be provided
 
 ## Non-Goals (Out of Scope for MVP)

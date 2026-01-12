@@ -101,26 +101,27 @@ Building a greenfield AI-powered personal trainer application that combines work
 - ➖ Developers must install Ollama locally
 - ➖ Two AI code paths to maintain
 
-### Decision 4: Drizzle ORM over Prisma
+### Decision 4: Supabase JS Client for Database Access
 
 **Rationale:**
-- Lightweight and performant (no runtime overhead)
-- SQL-like syntax feels natural for complex queries
-- Better TypeScript inference
-- Smaller bundle size impact
-- Excellent PostgreSQL support
+- Fully integrated with Supabase ecosystem (auth, storage, real-time)
+- Built-in Row Level Security (RLS) support
+- TypeScript-first with auto-generated types
+- No separate ORM layer needed - direct database access
+- Connection pooling handled by Supabase
 
 **Alternatives Considered:**
-- **Prisma**: More popular, better documentation, but heavier runtime and less control over SQL
-- **Raw SQL**: Maximum control but loses type safety and increases boilerplate
-- **Kysely**: Similar to Drizzle but smaller ecosystem
+- **Drizzle ORM**: Previously used, but added unnecessary complexity with Supabase
+- **Prisma**: More popular ORM, but heavier and doesn't integrate with Supabase RLS
+- **Raw SQL**: Maximum control but loses type safety and Supabase integration
 
 **Trade-offs:**
-- ➕ Type-safe queries with minimal overhead
-- ➕ Full control over SQL when needed
-- ➕ Better performance than Prisma
-- ➖ Smaller community and fewer resources
-- ➖ Steeper learning curve for developers unfamiliar with SQL
+- ➕ Seamless integration with Supabase Auth and RLS
+- ➕ Auto-generated TypeScript types from database schema
+- ➕ Simpler stack - no separate ORM configuration
+- ➕ Built-in real-time subscriptions
+- ➖ Query builder syntax may be less familiar to SQL-heavy developers
+- ➖ Less control over connection pooling compared to standalone ORMs
 
 ### Decision 5: shadcn/ui Component Library
 
@@ -203,7 +204,7 @@ Building a greenfield AI-powered personal trainer application that combines work
 ├─────────────────────────────────────────────────────────────┤
 │  PostgreSQL Database   │   Supabase Auth   │  Storage       │
 │  - Row Level Security  │   - Sessions      │  - Images      │
-│  - Drizzle ORM        │   - OAuth         │                │
+│  - JS Client API      │   - OAuth         │                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -437,9 +438,9 @@ async function generateWorkout(prompt: string, userId: string): Promise<Workout>
 **Impact:** High (app breaks under load)
 **Likelihood:** Low (unlikely to hit limits in MVP)
 **Mitigation:**
-- Use Supabase connection pooling (Supavisor)
-- Limit concurrent connections in Drizzle config
-- Monitor connection usage
+- Use Supabase connection pooling (Supavisor) - enabled by default
+- Monitor connection usage via Supabase Dashboard
+- Configure connection limits in Supabase settings if needed
 - Scale up Supabase plan if needed
 
 ### Risk 4: Audio Autoplay Blocking
