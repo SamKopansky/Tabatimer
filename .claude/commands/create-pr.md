@@ -1,13 +1,13 @@
 ---
-name: Save and Push
-description: Commit and push changes to a branch, then generate a PR link
+name: Create PR
+description: Commit and push changes to a branch, then create a pull request
 category: git
 tags: [git, commit, push, pr, workflow]
 ---
 
-# Save and Push Workflow
+# Create PR Workflow
 
-Execute this git workflow to save and push your session work:
+Execute this git workflow to save your session work and create a pull request:
 
 ## Step 1: Check Current Branch
 
@@ -53,27 +53,47 @@ EOF
 
 Run `git push -u origin <branch-name>` to push the branch to the remote.
 
-## Step 7: Generate PR Link
+## Step 7: Create Pull Request
 
-Get the repository information:
+Get the repository information and create the PR:
+
 1. Run `git remote get-url origin` to get the remote URL
 2. Parse the owner and repo name from the URL
-3. Construct and display a clickable PR creation link:
-   ```
-   https://github.com/<owner>/<repo>/compare/<branch-name>?expand=1
-   ```
+3. Determine the base branch (usually `main` or `master`):
+   - Run `git remote show origin | grep "HEAD branch"` to find the default branch
+   - Or use `main` as the default
+4. Generate a PR title and body based on the commit message(s):
+   - Title: Use the first line of the most recent commit message
+   - Body: Include a summary of changes with a link to Claude Code
+     ```markdown
+     ## Summary
+     [Brief description of changes]
 
-Display the link with clear instructions:
-```
-✅ Changes committed and pushed successfully!
+     🤖 Generated with [Claude Code](https://claude.com/claude-code)
+     ```
+5. Use the GitHub MCP tool to create the PR:
+   ```
+   mcp__github__create_pull_request({
+     owner: "<owner>",
+     repo: "<repo>",
+     title: "<pr-title>",
+     head: "<branch-name>",
+     base: "<base-branch>",
+     body: "<pr-body>"
+   })
+   ```
+6. Display the PR URL from the response:
+   ```
+   ✅ Changes committed and pushed successfully!
 
-🔗 Create a pull request:
-https://github.com/<owner>/<repo>/compare/<branch-name>?expand=1
-```
+   🎉 Pull request created: <PR URL>
+   ```
 
 ## Important Notes
 
 - NEVER use `git commit --amend` unless explicitly requested
 - ALWAYS include the Co-Authored-By line for attribution
 - If push fails (e.g., need to pull first), provide clear instructions to resolve
-- The PR link should be clickable in the terminal output
+- The PR will be created automatically using the GitHub MCP tool
+- Ensure you have proper GitHub authentication configured for PR creation
+- If PR creation fails, fall back to providing a manual PR creation link
