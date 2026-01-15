@@ -61,8 +61,9 @@ For each page/component, capture:
 3. Use Playwright MCP to navigate and screenshot
 4. Review screenshots for quality
 5. Fix any issues found
-6. Commit screenshots with code changes
+6. Screenshots remain local (not committed to git)
 
 ## .gitignore Note
 
-Screenshots ARE committed to git to serve as visual documentation and regression detection.
+Screenshots are NOT committed to git (too large, regenerated on demand).
+Only this README is tracked. Screenshots are ignored via `.gitignore`.
