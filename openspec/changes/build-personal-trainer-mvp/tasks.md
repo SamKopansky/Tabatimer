@@ -32,9 +32,9 @@
 - [ ] 3.7 Configure Google OAuth provider in Supabase
 - [ ] 3.8 Configure Apple OAuth provider in Supabase
 - [ ] 3.9 Implement OAuth login flows with UI
-- [ ] 3.10 Create password reset flow (request and confirm)
-- [ ] 3.11 Implement session management with HTTP-only cookies
-- [ ] 3.12 Create protected route middleware for (auth) route group
+- [x] 3.10 Create password reset flow (request and confirm)
+- [x] 3.11 Implement session management with HTTP-only cookies
+- [x] 3.12 Create protected route middleware for (auth) route group
 - [ ] 3.13 Build user profile page with update functionality
 - [ ] 3.14 Implement account deletion with confirmation
 - [ ] 3.15 Write authentication integration tests

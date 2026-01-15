@@ -42,6 +42,7 @@ next-env.d.ts
 
 # testing screenshots
 .playwright-mcp/tests/screenshots/*
+tests/screenshots/**
 
 # IDE
 .vscode

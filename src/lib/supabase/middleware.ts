@@ -2,6 +2,23 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import type { Database } from '../db/database.types'
 
+/**
+ * Updates the user session on every request.
+ *
+ * This function:
+ * 1. Creates a Supabase client with cookie access
+ * 2. Validates the current user's session
+ * 3. Refreshes the session if needed (extends expiration)
+ * 4. Sets HTTP-only cookies with the updated session
+ *
+ * Called automatically by middleware.ts on every matching request.
+ *
+ * Security Features:
+ * - HTTP-only cookies prevent XSS attacks
+ * - Secure flag ensures HTTPS-only transmission in production
+ * - SameSite=lax provides CSRF protection
+ * - Automatic session refresh keeps users logged in
+ */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -51,5 +68,5 @@ export async function updateSession(request: NextRequest) {
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely.
 
-  return supabaseResponse
+  return { response: supabaseResponse, user }
 }
