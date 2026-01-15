@@ -51,7 +51,8 @@
       "mcp__playwright__browser_close",
       "Bash(kill:*)",
       "Bash(lsof:*)",
-      "Bash(git remote get-url:*)"
+      "Bash(git remote get-url:*)",
+      "Bash(git checkout:*)"
     ]
   },
   "enabledMcpjsonServers": [
