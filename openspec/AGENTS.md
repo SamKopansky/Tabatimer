@@ -48,6 +48,17 @@ Skip proposal for:
 
 ### Stage 2: Implementing Changes
 Track these steps as TODOs and complete them one by one.
+0. **⚠️ BRANCH SETUP CHECKPOINT** - Before ANY development, ensure clean branch state:
+   - Check current branch: `git branch --show-current`
+   - Check working directory: `git status --short`
+   - If uncommitted changes exist, ask user how to proceed (commit/stash/discard)
+   - Switch to main: `git checkout main`
+   - Pull latest: `git pull origin main`
+   - Create feature branch: `git checkout -b feature/descriptive-name`
+   - Use naming: `feature/`, `fix/`, `refactor/`, `docs/` prefix with kebab-case description
+   - Verify setup: `git status` confirms new branch and clean working directory
+   - Add to TodoWrite and mark complete before proceeding
+   - See CLAUDE.md "Branch Management & Development Workflow" for detailed guidance
 1. **Read proposal.md** - Understand what's being built
 2. **Read design.md** (if exists) - Review technical decisions
 3. **⚠️ SCALE CHECKPOINT** - Before implementing, pause and assess:

@@ -17,6 +17,229 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
 
+## Branch Management & Development Workflow
+
+### Critical Rule: Always Start with Fresh Branch from Latest Main
+
+**Before starting ANY new development work, you MUST ensure you're working from a clean, up-to-date feature branch.**
+
+This prevents merge conflicts, ensures you're building on the latest code, and maintains a clean git history.
+
+### When This Applies
+
+**You MUST run this workflow before:**
+- Starting any new feature or bug fix
+- Beginning implementation of an OpenSpec proposal
+- Starting a refactoring task
+- Any time you're about to write or modify code
+
+**This checkpoint applies when:**
+- User asks to implement a new feature
+- User asks to fix a bug
+- You're about to start coding based on a proposal
+- Beginning any development work session
+- Resuming work after a break
+
+### Required Pre-Development Workflow
+
+When starting new development work:
+
+1. **Check Current Branch**:
+   ```bash
+   git branch --show-current
+   ```
+   - If on `main` → proceed to step 2
+   - If on an old feature branch → ask user if work is complete, then proceed to step 2
+
+2. **Check Working Directory Status**:
+   ```bash
+   git status --short
+   ```
+   - If clean → proceed to step 3
+   - If uncommitted changes exist → ask user how to proceed:
+     - Commit changes?
+     - Stash changes?
+     - Discard changes?
+
+3. **Switch to Main and Pull Latest**:
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
+
+4. **Create New Feature Branch**:
+   ```bash
+   git checkout -b feature/descriptive-name
+   ```
+   - Branch naming conventions:
+     - `feature/add-user-settings` (new features)
+     - `fix/login-error` (bug fixes)
+     - `refactor/auth-system` (refactoring)
+     - `docs/update-readme` (documentation)
+   - Use kebab-case
+   - Be descriptive but concise
+   - Include issue number if applicable: `feature/123-add-user-settings`
+
+5. **Confirm Setup**:
+   ```bash
+   git status
+   ```
+   - Verify you're on the new branch
+   - Verify working directory is clean
+   - Ready to start development
+
+### Integration with TodoWrite
+
+**Always include branch setup as first todos when starting new work:**
+
+```markdown
+- [ ] 0.0 Branch Setup: Verify clean state and create feature branch
+- [ ] 0.1 Architecture: Is this first of a pattern? Design for 10+
+- [ ] 1.1 Implementation: [actual feature work]
+```
+
+**Mark branch setup complete only after:**
+- New feature branch created from latest main
+- Working directory is clean
+- Ready to begin implementation
+
+### Examples
+
+#### ✅ Correct: Starting New Feature
+
+```
+User: "Add a user settings page"
+
+Your workflow:
+1. ✅ Check current branch: git branch --show-current
+   → Currently on: main
+2. ✅ Check status: git status --short
+   → Clean working directory
+3. ✅ Pull latest: git pull origin main
+   → Already up to date
+4. ✅ Create branch: git checkout -b feature/add-user-settings
+   → Switched to new branch
+5. ✅ Add to TodoWrite:
+   - [x] 0.0 Branch Setup: Create feature branch from main
+   - [ ] 0.1 Architecture: Design settings page structure
+   - [ ] 1.1 Implementation: Create settings page component
+6. ✅ NOW ready to begin implementation
+```
+
+#### ✅ Correct: Uncommitted Changes Found
+
+```
+User: "Add email validation"
+
+Your workflow:
+1. ✅ Check current branch: git branch --show-current
+   → Currently on: feature/old-work
+2. ✅ Check status: git status --short
+   → Found uncommitted changes in 3 files
+3. ✅ Ask user: "I see uncommitted changes on feature/old-work branch.
+   Would you like to:
+   A) Commit these changes first
+   B) Stash them for later
+   C) Discard them
+
+   After we handle these, I'll create a fresh branch from main for the email validation work."
+4. ✅ Wait for user decision
+5. ✅ Handle changes per user's choice
+6. ✅ Then proceed with branch creation workflow
+```
+
+#### ❌ Wrong: Starting Without Checking
+
+```
+User: "Add email validation"
+
+Wrong approach:
+1. ❌ Immediately start reading files
+2. ❌ Make changes on current branch (whatever it is)
+3. ❌ Don't check git status
+4. ❌ Don't pull latest changes
+
+Problems:
+- May be on old feature branch
+- May be missing latest changes from main
+- May have uncommitted work from previous task
+- Will cause merge conflicts later
+- No clean git history
+```
+
+#### ❌ Wrong: Skipping Pull
+
+```
+User: "Fix the login bug"
+
+Wrong approach:
+1. ✅ Check branch (on main)
+2. ❌ Skip git pull
+3. ❌ Create branch immediately: git checkout -b fix/login-bug
+4. ❌ Start coding
+
+Problems:
+- Not working from latest code
+- Bug might already be fixed
+- Building on outdated base
+- Will have to resolve conflicts later
+```
+
+### Red Flags - Stop Immediately
+
+If you find yourself doing any of these, STOP:
+
+- ❌ Starting implementation without checking current branch
+- ❌ Making changes directly on main branch
+- ❌ Creating new branch without pulling latest main first
+- ❌ Ignoring uncommitted changes from previous work
+- ❌ Assuming you're already on the right branch
+- ❌ Skipping git status check before starting
+- ❌ Creating branch with generic names like `feature/new-stuff` or `fix/bug`
+
+### Special Cases
+
+#### Working on Existing Feature Branch
+
+If user explicitly wants to continue work on an existing branch:
+- Ask them to confirm the branch name
+- Pull latest for that branch: `git pull origin <branch-name>`
+- Check for any conflicts with main
+- Proceed with development
+
+#### Hotfix on Main
+
+Only in true emergencies should you work directly on main:
+- Critical production bug
+- Immediate security fix
+- User explicitly requests it
+
+Even then, prefer creating a `hotfix/` branch.
+
+### Enforcement Checklist
+
+Before writing ANY code, verify:
+
+- [ ] Current branch checked
+- [ ] Working directory status verified (clean or handled)
+- [ ] On main branch
+- [ ] Latest changes pulled from main
+- [ ] New feature branch created with descriptive name
+- [ ] Confirmed on new branch with `git status`
+- [ ] TodoWrite updated with branch setup task marked complete
+
+### Summary
+
+> **Core principle: Every new development task starts from a clean, up-to-date feature branch.**
+>
+> This is mandatory. This is non-negotiable.
+>
+> Check branch. Check status. Pull latest. Create feature branch.
+>
+> Only then can you confidently start development.
+>
+> This prevents conflicts, ensures latest code, and maintains clean history.
+
 ## Architectural Thinking
 
 ### Critical Rule: Design for Scale From the Start
