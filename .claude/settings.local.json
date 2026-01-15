@@ -39,7 +39,18 @@
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(rg:*)",
-      "Bash(cd /Users/samk/Library/Mobile\\\\ Documents/com~apple~CloudDocs/Documents/code/tabatimer && git checkout:*)"
+      "Bash(cd /Users/samk/Library/Mobile\\\\ Documents/com~apple~CloudDocs/Documents/code/tabatimer && git checkout:*)",
+      "Bash(npx shadcn@latest add button input label card form)",
+      "Bash(curl:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_close",
+      "Bash(kill:*)",
+      "Bash(lsof:*)"
     ]
   },
   "enabledMcpjsonServers": [

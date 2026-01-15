@@ -277,3 +277,178 @@ You now have TWO mandatory checkpoints:
 
 Both checkpoints share a principle:
 > **Stop, inventory/design, THEN implement**
+
+## Visual Testing & Validation
+
+### Critical Rule: Every UI Change Must Be Visually Tested
+
+**MANDATORY: After EVERY UI change, you MUST perform visual E2E testing with screenshots.**
+
+This is not optional. This is not "if you have time." This is a hard requirement.
+
+### When This Applies
+
+**You MUST run visual tests after:**
+- Creating new pages or routes
+- Modifying existing UI components
+- Changing styles, layouts, or CSS
+- Adding or modifying forms
+- Updating navigation elements
+- Implementing responsive design changes
+- Any change that affects what the user sees
+
+**This includes:**
+- Initial implementation of new UI
+- Bug fixes that change UI
+- Refactoring that touches components
+- Style updates or theme changes
+
+### Required Visual Testing Workflow
+
+When you complete ANY UI work:
+
+1. **Add Visual Testing Todo** (if not already present):
+   ```
+   - [ ] Visual Testing: Test [feature] UI with Playwright screenshots
+   ```
+
+2. **Run Visual Tests Using Playwright MCP**:
+   - Navigate to the changed pages
+   - Take screenshots of key states
+   - Test responsive breakpoints (mobile, tablet, desktop)
+   - Test interactive states (hover, focus, error, loading)
+   - Test dark mode if applicable
+
+3. **Verify Visual Quality**:
+   - Layout is correct and not broken
+   - Text is readable and properly sized
+   - Colors match design system
+   - Spacing and alignment are proper
+   - No visual regressions in surrounding areas
+   - Responsive design works at all breakpoints
+
+4. **Document Results**:
+   - Save screenshots to `tests/screenshots/[feature-name]/`
+   - Note any issues found
+   - Fix issues before marking task complete
+
+5. **Mark Complete** only after:
+   - All visual tests pass
+   - Screenshots confirm quality
+   - No regressions detected
+
+### Integration with TodoWrite
+
+**Always include visual testing as a separate todo:**
+
+```markdown
+- [ ] 1.1 Implement login form UI
+- [ ] 1.2 Add form validation
+- [ ] 1.3 Visual Testing: Test login form with screenshots
+```
+
+**Visual testing must be completed before marking UI work done.**
+
+### Playwright MCP Commands for Visual Testing
+
+Use these patterns with the Playwright MCP tools:
+
+```typescript
+// 1. Navigate to page
+mcp__playwright__browser_navigate({ url: "http://localhost:3000/login" })
+
+// 2. Take full page screenshot
+mcp__playwright__browser_take_screenshot({
+  filename: "tests/screenshots/auth/login-page.png",
+  fullPage: true
+})
+
+// 3. Test responsive (resize and screenshot)
+mcp__playwright__browser_resize({ width: 375, height: 667 }) // Mobile
+mcp__playwright__browser_take_screenshot({
+  filename: "tests/screenshots/auth/login-mobile.png"
+})
+
+// 4. Test interactive states
+mcp__playwright__browser_click({ element: "Email input", ref: "[input id='email']" })
+mcp__playwright__browser_take_screenshot({
+  filename: "tests/screenshots/auth/login-focused.png"
+})
+
+// 5. Test error states (if applicable)
+// Submit invalid form, then screenshot
+```
+
+### Example: Complete Visual Testing Workflow
+
+```
+User: "Create a login page"
+
+Your workflow:
+1. ✅ Create login page component
+2. ✅ Create login route
+3. ✅ Implement form validation
+4. ✅ Add to TodoWrite: "Visual Testing: Test login page"
+5. ✅ Start dev server
+6. ✅ Navigate to /login with Playwright
+7. ✅ Take screenshots:
+   - Desktop view (1920x1080)
+   - Tablet view (768x1024)
+   - Mobile view (375x667)
+   - Focused input state
+   - Error state
+   - Loading state
+8. ✅ Review screenshots for quality
+9. ✅ Fix any visual issues found
+10. ✅ Mark visual testing todo complete
+11. ✅ Mark overall task complete
+
+ONLY THEN do you consider the work done.
+```
+
+### Red Flags - Stop Immediately
+
+If you find yourself doing any of these, STOP:
+
+- ❌ Marking UI work complete without visual testing
+- ❌ Skipping screenshots because "it looks fine"
+- ❌ Testing only one viewport size
+- ❌ Not testing error/loading states
+- ❌ Assuming no regressions without checking
+- ❌ Moving to next task without visual validation
+
+### Why This Matters
+
+Visual testing catches:
+- Layout breaks you didn't notice in code
+- Responsive design issues
+- CSS conflicts and specificity problems
+- Accessibility issues (contrast, sizing)
+- Browser-specific rendering bugs
+- Regressions in other parts of the UI
+- States you forgot to test manually
+
+### Enforcement Checklist
+
+Before marking ANY UI task complete, verify:
+
+- [ ] Dev server is running
+- [ ] Navigated to changed pages with Playwright
+- [ ] Screenshots taken for all viewport sizes
+- [ ] Interactive states tested and screenshotted
+- [ ] Visual quality verified
+- [ ] No regressions in surrounding UI
+- [ ] Screenshots saved to tests/screenshots/
+- [ ] Issues found have been fixed
+
+### Summary
+
+> **Core principle: No UI change is complete without visual testing.**
+>
+> This is mandatory. This is non-negotiable.
+>
+> Code review is not enough. Manual testing is not enough.
+>
+> You MUST use Playwright to navigate, interact, and screenshot.
+>
+> Only then can you confidently mark UI work as done.

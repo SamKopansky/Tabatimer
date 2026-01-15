@@ -74,9 +74,22 @@ Track these steps as TODOs and complete them one by one.
    - See `docs/REFACTORING.md` for complete workflow and triggers
 5. **Read tasks.md** - Get implementation checklist
 6. **Implement tasks sequentially** - Complete in order
-7. **Confirm completion** - Ensure every item in `tasks.md` is finished before updating statuses
-8. **Update checklist** - After all work is done, set every task to `- [x]` so the list reflects reality
-9. **Approval gate** - Do not start implementation until the proposal is reviewed and approved
+7. **⚠️ VISUAL TESTING CHECKPOINT** - After ANY UI change, MANDATORY visual testing:
+   - Did you create or modify pages, components, styles, or layouts?
+   - If yes, you MUST run visual E2E tests with Playwright screenshots
+   - STOP - do not mark UI work complete until visual testing is done:
+     * Start dev server
+     * Navigate to changed pages with Playwright MCP
+     * Take screenshots at all viewport sizes (desktop 1920x1080, tablet 768x1024, mobile 375x667)
+     * Test interactive states (focus, hover, error, loading)
+     * Verify visual quality and no regressions
+     * Save screenshots to `tests/screenshots/[feature]/`
+     * Fix any visual issues found
+   - Ask yourself: "Have I visually tested this with screenshots?" If no, work is not complete
+   - See CLAUDE.md "Visual Testing & Validation" section for detailed workflow
+8. **Confirm completion** - Ensure every item in `tasks.md` is finished before updating statuses
+9. **Update checklist** - After all work is done, set every task to `- [x]` so the list reflects reality
+10. **Approval gate** - Do not start implementation until the proposal is reviewed and approved
 
 ### Stage 3: Archiving Changes
 After deployment, create separate PR to:
