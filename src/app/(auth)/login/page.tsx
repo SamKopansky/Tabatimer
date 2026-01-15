@@ -1,4 +1,5 @@
 import { SignInForm } from '@/components/auth/signin-form'
+import { SuccessMessage } from '@/components/auth/success-message'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -16,10 +17,18 @@ export default function SignInPage() {
         <CardDescription>Enter your credentials to access your account</CardDescription>
       </CardHeader>
       <CardContent>
+        <Suspense fallback={null}>
+          <SuccessMessage />
+        </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <SignInForm />
         </Suspense>
         <div className="mt-4 text-center text-sm space-y-2">
+          <div>
+            <Link href="/forgot-password" className="text-blue-600 hover:underline">
+              Forgot your password?
+            </Link>
+          </div>
           <div>
             <Link href="/magic-link" className="text-blue-600 hover:underline">
               Sign in with Magic Link instead
