@@ -20,6 +20,14 @@ const emailSchema = z.object({
   email: z.string().email('Invalid email address'),
 })
 
+const resetPasswordSchema = z.object({
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(1, 'Please confirm your password'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ['confirmPassword'],
+})
+
 type ActionResult = {
   success: boolean
   error?: string
@@ -250,6 +258,101 @@ export async function sendMagicLink(formData: FormData): Promise<ActionResult> {
       message: 'Magic link sent! Please check your email to sign in.',
     }
   } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    }
+  }
+}
+
+/**
+ * Request a password reset email
+ */
+export async function requestPasswordReset(formData: FormData): Promise<ActionResult> {
+  try {
+    const rawData = {
+      email: formData.get('email') as string,
+    }
+
+    const validation = emailSchema.safeParse(rawData)
+
+    if (!validation.success) {
+      return {
+        success: false,
+        error: validation.error.issues[0].message,
+      }
+    }
+
+    const { email } = validation.data
+    const supabase = await createClient()
+
+    // Get the app URL for the email redirect
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${appUrl}/auth/reset-password`,
+    })
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Password reset link sent! Please check your email.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    }
+  }
+}
+
+/**
+ * Confirm password reset and update the password
+ */
+export async function confirmPasswordReset(formData: FormData): Promise<ActionResult> {
+  try {
+    const rawData = {
+      password: formData.get('password') as string,
+      confirmPassword: formData.get('confirmPassword') as string,
+    }
+
+    const validation = resetPasswordSchema.safeParse(rawData)
+
+    if (!validation.success) {
+      return {
+        success: false,
+        error: validation.error.issues[0].message,
+      }
+    }
+
+    const { password } = validation.data
+    const supabase = await createClient()
+
+    const { error } = await supabase.auth.updateUser({
+      password,
+    })
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      }
+    }
+
+    // Redirect to login after successful password reset
+    redirect('/login?message=Password reset successful. Please sign in with your new password.')
+  } catch (error) {
+    // Handle redirect errors (Next.js throws for redirects)
+    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
+      throw error
+    }
+
     return {
       success: false,
       error: error instanceof Error ? error.message : 'An unexpected error occurred',
