@@ -62,7 +62,9 @@
       "mcp__github__create_pull_request",
       "Bash(git mv .claude/commands/save-and-push.md .claude/commands/create-pr.md)",
       "Bash(npm run test:session:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(cd /Users/samk/Library/Mobile Documents/com~apple~CloudDocs/Documents/code/tabatimer && npx tsc:*)",
+      "mcp__playwright__browser_wait_for"
     ]
   },
   "enabledMcpjsonServers": [

@@ -1,8 +1,28 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  // Update session and get response with updated cookies and user
+  const { response, user } = await updateSession(request)
+
+  // Protect (auth) route group: redirect authenticated users to home
+  const isAuthPage = request.nextUrl.pathname.startsWith('/login') ||
+    request.nextUrl.pathname.startsWith('/signup') ||
+    request.nextUrl.pathname.startsWith('/magic-link') ||
+    request.nextUrl.pathname.startsWith('/forgot-password')
+
+  if (isAuthPage && user) {
+    // User is authenticated, redirect to home
+    const redirectUrl = new URL('/', request.url)
+    const redirectResponse = NextResponse.redirect(redirectUrl)
+    // Copy over session cookies from updateSession
+    response.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie.name, cookie.value, cookie)
+    })
+    return redirectResponse
+  }
+
+  return response
 }
 
 export const config = {
