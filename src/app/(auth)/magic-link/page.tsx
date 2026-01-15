@@ -1,28 +1,25 @@
-import { SignInForm } from '@/components/auth/signin-form'
+import { MagicLinkForm } from '@/components/auth/magic-link-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import { Suspense } from 'react'
 
 export const metadata = {
-  title: 'Sign In | Tabatimer',
-  description: 'Sign in to your account',
+  title: 'Magic Link Sign In | Tabatimer',
+  description: 'Sign in with a magic link sent to your email',
 }
 
-export default function SignInPage() {
+export default function MagicLinkPage() {
   return (
     <Card>
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-        <CardDescription>Enter your credentials to access your account</CardDescription>
+        <CardTitle className="text-2xl font-bold">Sign in with Magic Link</CardTitle>
+        <CardDescription>Enter your email to receive a sign-in link</CardDescription>
       </CardHeader>
       <CardContent>
-        <Suspense fallback={<div>Loading...</div>}>
-          <SignInForm />
-        </Suspense>
+        <MagicLinkForm />
         <div className="mt-4 text-center text-sm space-y-2">
           <div>
-            <Link href="/magic-link" className="text-blue-600 hover:underline">
-              Sign in with Magic Link instead
+            <Link href="/login" className="text-blue-600 hover:underline">
+              Sign in with password
             </Link>
           </div>
           <div>

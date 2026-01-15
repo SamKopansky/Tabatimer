@@ -27,8 +27,8 @@
 - [x] 3.2 Create auth utility functions (getUser, requireAuth)
 - [x] 3.3 Implement email/password registration flow with UI
 - [x] 3.4 Implement email/password login flow with UI
-- [ ] 3.5 Implement email verification system
-- [ ] 3.6 Implement magic link authentication
+- [x] 3.5 Implement email verification system
+- [x] 3.6 Implement magic link authentication
 - [ ] 3.7 Configure Google OAuth provider in Supabase
 - [ ] 3.8 Configure Apple OAuth provider in Supabase
 - [ ] 3.9 Implement OAuth login flows with UI

@@ -1,3 +1,4 @@
+import { ResendVerificationForm } from '@/components/auth/resend-verification-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Mail } from 'lucide-react'
 
@@ -6,7 +7,11 @@ export const metadata = {
   description: 'Check your email to verify your account',
 }
 
-export default function VerifyEmailPage() {
+export default function VerifyEmailPage({
+  searchParams,
+}: {
+  searchParams: { email?: string }
+}) {
   return (
     <Card>
       <CardHeader className="space-y-1">
@@ -24,8 +29,14 @@ export default function VerifyEmailPage() {
         <p className="text-sm text-slate-600 text-center">
           Please check your email inbox and click the verification link to activate your account.
         </p>
+        <div className="border-t pt-4">
+          <p className="text-sm text-slate-600 text-center mb-3">
+            Didn&apos;t receive the email?
+          </p>
+          <ResendVerificationForm defaultEmail={searchParams.email} />
+        </div>
         <p className="text-xs text-slate-500 text-center">
-          Didn&apos;t receive the email? Check your spam folder or contact support.
+          Check your spam folder or try resending the verification email.
         </p>
       </CardContent>
     </Card>

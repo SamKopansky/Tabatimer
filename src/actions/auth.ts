@@ -16,9 +16,14 @@ const signInSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 })
 
+const emailSchema = z.object({
+  email: z.string().email('Invalid email address'),
+})
+
 type ActionResult = {
   success: boolean
   error?: string
+  message?: string
 }
 
 /**
@@ -73,7 +78,7 @@ export async function signUp(formData: FormData): Promise<ActionResult> {
 
     // If email confirmation is required, redirect to confirmation page
     if (data.user && !data.session) {
-      redirect('/auth/verify-email')
+      redirect(`/auth/verify-email?email=${encodeURIComponent(email)}`)
     }
 
     // If auto-confirmed, redirect to home
@@ -144,6 +149,107 @@ export async function signIn(formData: FormData): Promise<ActionResult> {
       throw error
     }
 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    }
+  }
+}
+
+/**
+ * Resend email verification link
+ */
+export async function resendVerificationEmail(formData: FormData): Promise<ActionResult> {
+  try {
+    const rawData = {
+      email: formData.get('email') as string,
+    }
+
+    const validation = emailSchema.safeParse(rawData)
+
+    if (!validation.success) {
+      return {
+        success: false,
+        error: validation.error.issues[0].message,
+      }
+    }
+
+    const { email } = validation.data
+    const supabase = await createClient()
+
+    // Get the app URL for the email redirect
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: {
+        emailRedirectTo: `${appUrl}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Verification email sent! Please check your inbox.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    }
+  }
+}
+
+/**
+ * Send a magic link for passwordless authentication
+ */
+export async function sendMagicLink(formData: FormData): Promise<ActionResult> {
+  try {
+    const rawData = {
+      email: formData.get('email') as string,
+    }
+
+    const validation = emailSchema.safeParse(rawData)
+
+    if (!validation.success) {
+      return {
+        success: false,
+        error: validation.error.issues[0].message,
+      }
+    }
+
+    const { email } = validation.data
+    const supabase = await createClient()
+
+    // Get the app URL for the email redirect
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${appUrl}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Magic link sent! Please check your email to sign in.',
+    }
+  } catch (error) {
     return {
       success: false,
       error: error instanceof Error ? error.message : 'An unexpected error occurred',
