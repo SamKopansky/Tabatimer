@@ -50,6 +50,7 @@ tests/screenshots/**
 *.swp
 *.swo
 *~
+claude/settings.local.json
 
 # OS
 Thumbs.db
