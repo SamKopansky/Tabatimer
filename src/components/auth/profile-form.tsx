@@ -1,6 +1,6 @@
 'use client'
 
-import { updateProfile } from '@/actions/auth'
+import { updateProfile } from '@/actions/profile'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
