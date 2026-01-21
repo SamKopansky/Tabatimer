@@ -240,6 +240,51 @@ Before writing ANY code, verify:
 >
 > This prevents conflicts, ensures latest code, and maintains clean history.
 
+## Server Actions Organization
+
+### Critical Rule: Organize Actions by Feature Domain
+
+**Server Actions MUST be organized by the feature they serve, not by technical function.**
+
+See `docs/SERVER_ACTIONS.md` for complete guidance.
+
+### Quick Reference
+
+**File Naming Pattern:**
+```
+Page/Feature → Actions File
+- Profile page → src/actions/profile.ts
+- Workout management → src/actions/workouts.ts
+- Exercise library → src/actions/exercises.ts
+```
+
+**What Goes Where:**
+- `auth.ts` - Authentication flows (login, signup, password reset, email verification)
+- `profile.ts` - User profile management (update profile, upload avatar, delete account)
+- `workouts.ts` - Workout operations (generate, save, delete, duplicate)
+- `exercises.ts` - Exercise operations (search, filter, favorite)
+- `history.ts` - Workout history (list, create, delete, export)
+
+**When to Create New File:**
+1. Creating a new page with backend operations
+2. Grouping related operations for a feature
+3. Existing file exceeds ~300 lines
+4. Operations are conceptually distinct
+
+**File Structure:**
+```typescript
+'use server'
+// Imports
+// Type definitions (local to file)
+// Validation schemas (co-located)
+// Exported action functions
+```
+
+**Before Creating First Action:**
+- Read `docs/SERVER_ACTIONS.md`
+- Check existing actions files for patterns
+- Ask: "What page/feature does this serve?" → That's your file name
+
 ## Architectural Thinking
 
 ### Critical Rule: Design for Scale From the Start
