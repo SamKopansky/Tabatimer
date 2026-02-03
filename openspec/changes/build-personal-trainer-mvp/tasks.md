@@ -36,7 +36,7 @@
 - [x] 3.11 Implement session management with HTTP-only cookies
 - [x] 3.12 Create protected route middleware for (auth) route group
 - [x] 3.13 Build user profile page with update functionality
-- [ ] 3.14 Implement account deletion with confirmation
+- [x] 3.14 Implement account deletion with confirmation
 - [ ] 3.15 Write authentication integration tests
 - [ ] 3.16 Test and verify RLS policies with different users
 

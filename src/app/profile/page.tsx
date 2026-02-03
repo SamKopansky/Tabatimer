@@ -1,3 +1,4 @@
+import { DeleteAccount } from '@/components/auth/delete-account'
 import { ProfileForm } from '@/components/auth/profile-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { requireAuth } from '@/lib/auth/utils'
@@ -27,7 +28,7 @@ export default async function ProfilePage() {
     ''
 
   return (
-    <div className="container max-w-2xl mx-auto py-8 px-4">
+    <div className="container max-w-2xl mx-auto py-8 px-4 space-y-6">
       <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Profile Settings</CardTitle>
@@ -38,6 +39,18 @@ export default async function ProfilePage() {
             initialDisplayName={displayName}
             email={user.email || ''}
           />
+        </CardContent>
+      </Card>
+
+      <Card className="border-red-200">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-xl font-bold text-red-600">Danger Zone</CardTitle>
+          <CardDescription>
+            Irreversible actions that will permanently affect your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <DeleteAccount />
         </CardContent>
       </Card>
     </div>

@@ -83,3 +83,62 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
     }
   }
 }
+
+/**
+ * Delete user account and all associated data
+ * This action is irreversible
+ */
+export async function deleteAccount(confirmationText: string): Promise<ActionResult> {
+  try {
+    // Validate confirmation text
+    if (confirmationText !== 'DELETE') {
+      return {
+        success: false,
+        error: 'Confirmation text must be exactly "DELETE"',
+      }
+    }
+
+    const supabase = await createClient()
+
+    // Get current user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return {
+        success: false,
+        error: 'Not authenticated',
+      }
+    }
+
+    // Delete user data from database
+    // RLS policies ensure users can only delete their own data
+    // CASCADE constraints will handle related records (workouts, history, preferences)
+    const { error: dbError } = await supabase
+      .from('users')
+      .delete()
+      .eq('id', user.id)
+
+    if (dbError) {
+      return {
+        success: false,
+        error: `Failed to delete user data: ${dbError.message}`,
+      }
+    }
+
+    // Sign out the user
+    // Note: This doesn't delete the auth.users record, which would require admin API
+    // The user's data is deleted, and they are signed out
+    // If needed, admin can manually delete auth records via Supabase dashboard
+    await supabase.auth.signOut()
+
+    return {
+      success: true,
+      message: 'Account deleted successfully',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    }
+  }
+}
