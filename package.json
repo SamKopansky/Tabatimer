@@ -16,6 +16,8 @@
     "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
     "db:seed": "tsx src/lib/db/seed.ts",
     "db:test-rls": "tsx --env-file=.env scripts/test-rls-policies.ts",
+    "seed:users": "tsx --env-file=.env.local scripts/seed/test-users.ts",
+    "seed:all": "npm run seed:users",
     "test:session": "tsx --env-file=.env.local scripts/test-session-management.ts"
   },
   "keywords": [],
