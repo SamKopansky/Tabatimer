@@ -16,6 +16,9 @@
     "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
     "db:seed": "tsx src/lib/db/seed.ts",
     "db:test-rls": "tsx --env-file=.env scripts/test-rls-policies.ts",
+    "seed:users": "tsx --env-file=.env.local scripts/seed/test-users.ts",
+    "seed:all": "npm run seed:users",
+    "dev:env": "tsx scripts/dev/generate-local-env.ts",
     "test:session": "tsx --env-file=.env.local scripts/test-session-management.ts"
   },
   "keywords": [],
@@ -23,6 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/ssr": "^0.8.0",

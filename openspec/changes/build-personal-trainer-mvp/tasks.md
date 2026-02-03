@@ -29,14 +29,14 @@
 - [x] 3.4 Implement email/password login flow with UI
 - [x] 3.5 Implement email verification system
 - [x] 3.6 Implement magic link authentication
-- [ ] 3.7 Configure Google OAuth provider in Supabase
-- [ ] 3.8 Configure Apple OAuth provider in Supabase
-- [ ] 3.9 Implement OAuth login flows with UI
+- [ ] 3.7 Configure Google OAuth provider in Supabase (skipped)
+- [ ] 3.8 Configure Apple OAuth provider in Supabase (skipped)
+- [ ] 3.9 Implement OAuth login flows with UI (skipped)
 - [x] 3.10 Create password reset flow (request and confirm)
 - [x] 3.11 Implement session management with HTTP-only cookies
 - [x] 3.12 Create protected route middleware for (auth) route group
 - [x] 3.13 Build user profile page with update functionality
-- [ ] 3.14 Implement account deletion with confirmation
+- [x] 3.14 Implement account deletion with confirmation
 - [x] 3.15 Write authentication integration tests
 - [ ] 3.16 Test and verify RLS policies with different users
 
