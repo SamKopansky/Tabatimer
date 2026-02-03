@@ -18,18 +18,40 @@ export function assertDevelopment(scriptName: string): void {
   // Check if DATABASE_URL points to a local database
   const databaseUrl = process.env.DATABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 
+  // Check for placeholder values
+  const isPlaceholder =
+    databaseUrl.includes('your-') ||
+    databaseUrl.includes('example') ||
+    databaseUrl === ''
+
+  if (isPlaceholder) {
+    throw new Error(
+      `🚨 Configuration Error: ${scriptName} cannot run without proper setup!\n\n` +
+      'Your .env.local appears to have placeholder values.\n\n' +
+      'To fix this:\n' +
+      '1. Make sure Supabase is running: npm run db:start\n' +
+      '2. Get the local URL: npm run db:status\n' +
+      '3. Update .env.local with:\n' +
+      '   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321\n' +
+      '   NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key-from-db:status>\n' +
+      '   SUPABASE_SERVICE_ROLE_KEY=<service-key-from-db:status>\n'
+    )
+  }
+
   const isLocalDatabase =
     databaseUrl.includes('localhost') ||
     databaseUrl.includes('127.0.0.1') ||
-    databaseUrl.includes('.local') ||
-    databaseUrl.includes('supabase.co/project') // Local Supabase project
+    databaseUrl.includes('.local')
 
-  if (!isLocalDatabase && databaseUrl) {
+  if (!isLocalDatabase) {
     throw new Error(
       `🚨 DANGER: ${scriptName} attempting to modify non-local database!\n` +
-      `Database URL: ${databaseUrl}\n` +
+      `Database URL: ${databaseUrl}\n\n` +
       'This script only runs against local databases for safety.\n' +
-      'If you are certain this is a development database, update the safety check.'
+      'Your .env.local should point to: http://127.0.0.1:54321\n\n' +
+      'To use local Supabase:\n' +
+      '1. Run: npm run db:start\n' +
+      '2. Update .env.local with local URLs from: npm run db:status\n'
     )
   }
 

@@ -18,6 +18,7 @@
     "db:test-rls": "tsx --env-file=.env scripts/test-rls-policies.ts",
     "seed:users": "tsx --env-file=.env.local scripts/seed/test-users.ts",
     "seed:all": "npm run seed:users",
+    "dev:env": "tsx scripts/dev/generate-local-env.ts",
     "test:session": "tsx --env-file=.env.local scripts/test-session-management.ts"
   },
   "keywords": [],
