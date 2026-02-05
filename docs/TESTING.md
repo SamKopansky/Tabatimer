@@ -7,16 +7,21 @@ Comprehensive guide to testing in the TabaTimer project.
 Our testing strategy uses four distinct test categories, each with its own purpose, location, and execution environment:
 
 1. **Unit Tests** - Test individual functions, hooks, and components in isolation
-2. **Integration Tests** - Test interactions between modules (Server Actions, database queries)
+2. **Integration Tests** - Test interactions between modules (Server Actions, database queries, RLS policies)
 3. **Infrastructure Tests** - Test database-level concerns (migrations, RLS, seeds)
 4. **E2E Tests** - Test complete user flows through the UI
+
+## Related Documentation
+
+- [RLS Testing Guide](./TESTING_RLS.md) - Detailed guide for Row Level Security policy testing
 
 ## Quick Reference
 
 | Test Type | Location | Extension | Environment | Run Command |
 |-----------|----------|-----------|-------------|-------------|
-| Unit | Co-located with source | `.test.ts(x)` | jsdom | `npm run test:unit` |
-| Integration | `src/lib/actions/` | `.test.ts` | Node | `npm run test:integration` |
+| Unit | Co-located with source | `.test.ts(x)` | jsdom | `npm test` |
+| Integration (Auth) | `src/actions/__tests__/` | `.test.ts` | Node (mocked) | `npm test` |
+| Integration (RLS) | `src/lib/supabase/__tests__/` | `.test.ts` | Node (real DB) | `npm run test:integration` |
 | Infrastructure | `tests/database/` | `.test.ts` | Node | `npm run test:infrastructure` |
 | E2E | `e2e/` | `.spec.ts` | Browser | `npm run test:e2e` |
 
