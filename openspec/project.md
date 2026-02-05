@@ -33,64 +33,111 @@ Tell the app what you want to do ("30 min leg workout with dumbbells") and it ge
 ## Design System
 
 ### Design Philosophy
-**Modern Fitness Aesthetic**: Sleek, energetic, and polished. Think Peloton or Apple Fitness - professional without being corporate, motivational without being cheesy. Gradients, smooth animations, rounded corners, and a sense of forward momentum.
+**Superhero Comic Aesthetic**: Bold, dramatic, and powerful. Inspired by classic 90s Marvel/DC comics (Jim Lee, Todd McFarlane era) fused with the dark, cinematic tone of Batman and the kinetic energy of Spider-Verse. The app should feel like stepping into a comic book — thick outlines, halftone textures, speed lines, and explosive color — while remaining a fully functional, usable fitness app. Comic elements *enhance* the UI without overwhelming it.
+
+**Core Influences** (mix, don't copy any single one):
+- 90s X-Men / Marvel — bold primary colors, dynamic energy, saturated palettes
+- Batman / dark heroes — deep blacks, moody atmosphere, neon accents on dark
+- Spider-Verse — halftone dots, mixed media feel, vibrant on dark
+- Classic comic printing — ben-day dots, offset shadows, thick panel borders
 
 ### Visual Style
-- **Modern & Energetic**: Polished fitness app aesthetic with smooth gradients and dynamic elements
-- **High Contrast**: Easy to read during intense workouts, optimized for glanceability
-- **Bold Typography**: Tabular monospace for timers (numbers don't shift), bold sans-serif for headings
-- **Motivational Without Overwhelm**: Visual energy that motivates without distracting from the workout
-- **Consistent Spacing**: Use Tailwind's spacing scale (4px base unit)
-- **Purposeful Motion**: Smooth transitions and subtle animations that guide attention
+- **Dark & Dramatic**: Deep black/dark purple base with neon accents (cyan, magenta, electric yellow). Feels like a comic panel lit by neon signs.
+- **Comic-Themed UI**: Comic-inspired colors, fonts, borders, and textures that enhance a functional app. The comic elements are intentional accents, not wallpaper.
+- **Bold Outlines & Hard Shadows**: Thick black borders (2-4px) on cards and containers. Offset drop shadows that evoke comic panel borders. No soft/blurred shadows.
+- **Halftone & Speed Lines**: Classic halftone dot patterns as background textures. Radiating speed lines and starburst shapes for energy and emphasis. Both combined for full comic vocabulary.
+- **High Contrast for Glanceability**: Neon-on-dark ensures readability during intense workouts. Timer numbers must be instantly readable from across a room.
+- **Consistent Spacing**: Tailwind's spacing scale (4px base unit) — structure stays clean even when the aesthetic is bold.
+- **Purposeful Motion**: Transitions and animations should feel dynamic and comic-like (snappy, not floaty). Phase transitions should feel like page turns.
 
 ### Color Palette
-**Traffic Light System** for intuitive phase recognition:
+**Superhero Remix** for dramatic phase recognition:
 
-*Timer States:*
-- **Work Phase**: Red spectrum (`bg-red-500` to `bg-red-600`)
-  - High energy, "go hard" signal
-  - Universally recognized as active/intense
-- **Rest Phase**: Green spectrum (`bg-green-500` to `bg-green-600`)
-  - Recovery, "you earned it" signal
-  - Calming and reassuring
-- **Prepare/Transition**: Yellow/Amber (`bg-amber-500`)
-  - Warning, "get ready" signal
+*Timer Phase Colors:*
+- **Work Phase**: Electric crimson/magenta (`#DC2626` → `#E11D48` / rose-600 to red-600)
+  - Explosive, high energy. Background radiates intensity.
+  - Speed lines and starburst effects amplify urgency.
+- **Rest Phase**: Deep teal/cyan (`#06B6D4` → `#0891B2` / cyan-500 to cyan-600)
+  - Cool, recovering. Calmer but still comic-styled.
+  - Halftone dot pattern fades in, speed lines recede.
+- **Prepare/Transition**: Vivid gold/amber (`#F59E0B` → `#D97706` / amber-500 to amber-600)
+  - "Get ready" warning signal. Pulsing glow effect.
 
-*UI Colors:*
-- **Primary Action**: Blue (`bg-blue-600`) - start workout, generate, primary CTAs
-- **Neutral**: Slate grays (`bg-slate-50` to `bg-slate-900`) - backgrounds, text
-- **Success**: Green (`bg-green-500`) - completed, achievements
-- **Warning**: Orange (`bg-orange-500`) - alerts, cautions
-- **Error**: Red (`bg-red-500`) - errors, destructive actions
+*UI Colors (Dark Theme Base):*
+- **Background**: Near-black (`#0A0A0F` / custom) with subtle dark purple undertone
+- **Surface/Cards**: Dark gray-purple (`#1A1A2E` / custom) — slightly lifted from background
+- **Primary Action**: Electric cyan (`#06B6D4` / cyan-500) — start workout, generate, primary CTAs
+- **Secondary Action**: Vivid magenta (`#E11D48` / rose-600) — destructive, stop, high-energy actions
+- **Accent/Highlight**: Electric yellow (`#FACC15` / yellow-400) — achievements, badges, comic text effects
+- **Text Primary**: White/near-white (`#F8FAFC` / slate-50)
+- **Text Secondary**: Cool gray (`#94A3B8` / slate-400)
+- **Success**: Neon green (`#22C55E` / green-500) — completed, achievements
+- **Warning**: Amber (`#F59E0B` / amber-500) — alerts, cautions
+- **Error**: Bright red (`#EF4444` / red-500) — errors, destructive states
+- **Outline/Border**: Thick black (`#000000`) for comic panel borders; neon glow colors for interactive element borders
 
-*Gradients:*
-- Use Tailwind's gradient utilities for hero sections, cards, and buttons
-- Subtle gradients (2-3 shades apart) for depth without distraction
-- Example: `bg-gradient-to-br from-blue-500 to-blue-700`
+*UI Colors (Light Theme Variant):*
+- **Background**: Off-white with subtle halftone dot texture (`#F8F8FC`)
+- **Surface/Cards**: White with thick black comic borders and offset shadows
+- **Primary Action**: Deep cyan (`#0891B2` / cyan-600)
+- **Secondary Action**: Deep rose (`#BE123C` / rose-700)
+- **Accent/Highlight**: Bold yellow (`#EAB308` / yellow-500)
+- **Text Primary**: Near-black (`#0F172A` / slate-900)
+- **Text Secondary**: Dark gray (`#475569` / slate-600)
+- Light theme retains comic borders, halftone textures, and bold typography. The feel is "printed comic page" vs dark theme's "neon-lit comic panel."
+
+*Both themes supported, user's choice. Dark is the flagship/default.*
 
 ### Typography
 
 **Font Stack:**
-- **Timer/Numbers**: Monospace tabular (JetBrains Mono, Roboto Mono, or `font-mono`)
-  - Fixed-width ensures countdown doesn't shift
-  - Tabular numerals for clean alignment
-- **Headings/UI**: System sans-serif (`font-sans` - Inter, SF Pro, Roboto)
-  - Modern, readable, fast loading
-  - Bold weights for emphasis
+- **Timer/Numbers & Headings**: Comic-style display font (Bangers via Google Fonts)
+  - ALL-CAPS comic book lettering for headings, timer display, exercise names
+  - Provides authentic comic energy without sacrificing readability
+  - Tabular/monospace fallback for timer countdown to prevent number shifting: (JetBrains Mono, Roboto Mono, `font-mono`) with Bangers styling for the surrounding context
+- **Body/UI Text**: Clean sans-serif (`font-sans` — Inter, SF Pro, Roboto)
+  - Readable body text, form labels, descriptions
+  - Provides contrast against the bold headings
+  - Keeps forms and data-heavy screens legible
 
 **Type Scale:**
-- **Timer Countdown**: `text-9xl` (128px) on mobile, larger on desktop
-- **Exercise Name**: `text-3xl` (30px) - bold, prominent during workout
-- **Section Headings**: `text-2xl` (24px) - bold
-- **Body Text**: `text-base` (16px) - regular weight
-- **Labels/Meta**: `text-sm` (14px) - medium weight
-- **Captions**: `text-xs` (12px) - for timestamps, subtitles
+- **Timer Countdown**: `text-9xl` (128px) on mobile, larger on desktop — Bangers or monospace tabular, with text-shadow glow effect matching phase color
+- **Exercise Name**: `text-3xl` (30px) — Bangers, ALL-CAPS, comic styling
+- **Section Headings**: `text-2xl` (24px) — Bangers, ALL-CAPS
+- **Subheadings**: `text-xl` (20px) — Bangers or bold sans-serif
+- **Body Text**: `text-base` (16px) — sans-serif, regular weight
+- **Labels/Meta**: `text-sm` (14px) — sans-serif, medium weight
+- **Captions**: `text-xs` (12px) — sans-serif, for timestamps, subtitles
 
 **Font Weights:**
-- Regular (400): Body text, descriptions
-- Medium (500): Labels, emphasized text
-- Semibold (600): Subheadings, buttons
-- Bold (700): Headings, timer numbers
+- Regular (400): Body text, descriptions (sans-serif)
+- Medium (500): Labels, emphasized text (sans-serif)
+- Semibold (600): Buttons, subheadings (sans-serif)
+- Bold (700): All Bangers headings are inherently bold
+- Extra Bold (800): Timer numbers (maximum impact)
+
+### Comic Visual Effects
+
+**Onomatopoeia / Comic Text Bursts:**
+Comic-style text effects appear at key impactful moments only:
+- **Workout Start**: "GO!" burst effect (starburst background, rotated text, yellow on dark)
+- **Phase Transitions**: "SWITCH!" or "REST!" with speed-line background
+- **Workout Complete**: "POW!" or "DONE!" explosion effect with confetti/starburst
+- **Personal Record**: "BOOM!" or "NEW RECORD!" with impact lines
+- These are CSS-animated overlays, not permanent UI elements. They appear briefly (1-2 seconds) and fade.
+- Never show text bursts for mundane interactions (button clicks, navigation, form submits).
+
+**Halftone Patterns:**
+- Subtle halftone dot patterns as background textures on cards and sections
+- CSS-generated using radial gradients (no image assets needed)
+- More prominent in the timer view, subtler in management screens
+- Pattern opacity: ~5-10% on cards, ~15-20% on timer backgrounds
+
+**Speed Lines & Energy:**
+- Radiating lines from the timer countdown during work phases
+- CSS-generated using conic gradients or pseudo-elements
+- Intensity scales with phase urgency (strongest during work, subtle during rest)
+- Starburst/impact shapes behind key numbers and headings
 
 ### Component Design Principles
 - **Mobile-First**: Design for phone screens first, scale up for desktop
@@ -101,43 +148,48 @@ Tell the app what you want to do ("30 min leg workout with dumbbells") and it ge
   - ARIA labels where needed
   - Keyboard navigation support
   - Color is not the only indicator (use icons + text)
-- **Card-Based Layout**: Group related content in cards with subtle shadows
-- **Rounded Corners**: `rounded-lg` (8px) for most components, `rounded-xl` (12px) for cards
-- **Performance**: 60fps animations, no layout shifts, fast interactions
+  - Neon-on-dark meets 4.5:1 contrast ratio minimum
+  - `prefers-reduced-motion` disables speed lines, halftone animations, and text bursts
+- **Comic Panel Cards**: Content grouped in cards with thick black borders (2-4px) and offset drop shadows (4px right, 4px down, solid black). Cards feel like comic panels.
+- **Sharp Corners with Slight Round**: `rounded-md` (6px) — enough to avoid harsh edges but sharper than the previous soft rounded look. Some elements (badges, text bursts) use `rounded-none` for a raw comic feel.
+- **Performance**: 60fps animations, no layout shifts. Halftone and speed line effects use CSS only (no canvas/JS).
 
 ### Layout Guidelines
 
 *Navigation:*
-- **Bottom Tab Bar** (mobile): Timer, Workouts, History, Profile
-- **Side Nav** (desktop): Collapsible sidebar with same sections
-- **Always accessible**: Never hide navigation during workouts
+- **Bottom Tab Bar** (mobile): Timer, Workouts, History, Profile — styled as comic panel segments with thick borders between items. Active tab glows with the primary accent color.
+- **Side Nav** (desktop): Sidebar with comic-styled section headers (Bangers font, ALL-CAPS). Active item has a neon accent bar.
+- **Always accessible**: Never hide navigation during workouts (timer full-screen mode is the exception, with a clear exit control).
 
-*Timer View:*
-- **Full-Screen Mode**: Option to hide nav and focus only on timer
-- **Centered Content**: Timer display centered vertically and horizontally
-- **Floating Controls**: Buttons float above background, always visible
-- **Current Exercise**: Prominently displayed above or below timer
+*Timer View (The Action Panel):*
+- **Full-Screen Mode**: The timer IS a comic action panel. Background fills with phase color, overlaid with halftone dots and radiating speed lines.
+- **Centered Content**: Timer countdown centered, massive, glowing text shadow matching phase color.
+- **Exercise Name**: Displayed in Bangers font above the timer in a comic caption box (dark background, white text, thick border).
+- **Floating Controls**: Play/pause/skip buttons styled as bold comic-style buttons with thick outlines and hard shadows. High contrast against the phase background.
+- **Phase Transitions**: Dramatic visual shift — colors change, speed lines animate, brief text burst ("REST!" / "GO!").
 
 *Workout Generation:*
-- **Prompt Input**: Large text area, friendly placeholder text
-- **Quick Actions**: Chips for common requests ("Quick 20min", "Leg Day", etc.)
-- **Generated Output**: Scrollable list of exercises with expand/collapse
+- **Prompt Input**: Dark card with thick border. Placeholder text in comic style ("Tell me your workout, hero...").
+- **Quick Actions**: Chips styled as comic badges — bold outline, slight rotation for dynamism, accent colors.
+- **Generated Output**: Exercises in comic panel card layout. Each exercise card has thick border, halftone background, exercise name in Bangers.
 
 *Exercise Library:*
-- **Grid Layout**: 2 columns on mobile, 3-4 on desktop
-- **Filter Chips**: Quick filters for muscle group, equipment, difficulty
-- **Search Bar**: Sticky at top, instant search
+- **Grid Layout**: 2 columns on mobile, 3-4 on desktop. Each card is a comic panel.
+- **Filter Chips**: Styled as comic badges with thick borders and accent colors.
+- **Search Bar**: Sticky at top, thick outline, comic-styled focus state (glow + outline thickens).
 
 *History/Analytics:*
-- **Timeline View**: Reverse chronological list of workouts
-- **Stats Cards**: Grid of key metrics (total workouts, streak, favorite exercise)
-- **Charts**: Simple bar/line charts for progress over time
+- **Timeline View**: Reverse chronological, each entry styled as a mini comic panel with date caption.
+- **Stats Cards**: Grid of metrics in bold comic panels. Key numbers in Bangers font with neon glow.
+- **Charts**: Bold outlines on chart elements, comic color palette, halftone fills.
 
 ### Spacing & Rhythm
 - **Screen Padding**: `px-4` (16px) on mobile, `px-8` (32px) on desktop
 - **Component Gaps**: `gap-4` (16px) for related items, `gap-8` (32px) between sections
 - **Card Padding**: `p-6` (24px) inside cards
 - **Vertical Rhythm**: `space-y-6` (24px) between major sections
+- **Border Widths**: `border-2` (2px) default, `border-3` or `border-4` (3-4px) for emphasis (cards, active elements)
+- **Offset Shadows**: `shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]` for comic panel effect
 
 ## Tech Stack
 
