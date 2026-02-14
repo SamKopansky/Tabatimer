@@ -298,7 +298,7 @@ The project SHALL use consistent naming conventions for files.
 #### Scenario: Configuration files
 - **WHEN** creating config files
 - **THEN** SHALL use standard tool names
-- **AND** examples: `vitest.config.ts`, `tailwind.config.js`, `tsconfig.json`
+- **AND** examples: `vitest.config.ts`, `tsconfig.json`
 
 ## Design Decisions
 
