@@ -41,7 +41,7 @@
 - [x] 3.16 Test and verify RLS policies with different users
 
 ## 4. UI Foundation and Design System (Superhero Comic Aesthetic)
-- [ ] 4.1 Install and configure comic fonts: Bangers (Google Fonts) for timer/headings, Inter for body/UI text, JetBrains Mono as monospace fallback for timer numbers
+- [x] 4.1 Install and configure comic fonts: Bangers (Google Fonts) for timer/headings, Inter for body/UI text, JetBrains Mono as monospace fallback for timer numbers
 - [ ] 4.2 Set up Tailwind superhero comic color palette (dark theme base: near-black/dark-purple, phase colors: crimson/cyan/gold, accents: electric cyan/magenta/yellow)
 - [ ] 4.3 Create comic CSS utilities: halftone dot patterns (radial gradients), speed lines (conic gradients), offset drop shadows, thick comic borders (2-4px)
 - [ ] 4.4 Create root layout with dark-first theme support and comic styling context
