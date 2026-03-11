@@ -40,19 +40,22 @@
 - [x] 3.15 Write authentication integration tests
 - [x] 3.16 Test and verify RLS policies with different users
 
-## 4. UI Foundation and Design System
-- [ ] 4.1 Install and configure custom fonts (monospace for timer, sans-serif for UI)
-- [ ] 4.2 Set up Tailwind custom colors (traffic light system: red/green/amber)
-- [ ] 4.3 Create root layout with navigation structure
-- [ ] 4.4 Build bottom tab navigation for mobile
-- [ ] 4.5 Build collapsible sidebar navigation for desktop
-- [ ] 4.6 Create responsive layout containers and spacing utilities
-- [ ] 4.7 Implement dark mode toggle (optional, for future enhancement)
-- [ ] 4.8 Build reusable card components with shadcn/ui styling
-- [ ] 4.9 Create loading states and skeleton screens
-- [ ] 4.10 Build error boundary components and error pages
-- [ ] 4.11 Set up toast notification system (shadcn/ui toast)
-- [ ] 4.12 Verify accessibility (keyboard navigation, ARIA labels, focus indicators)
+## 4. UI Foundation and Design System (Superhero Comic Aesthetic)
+- [x] 4.1 Install and configure comic fonts: Bangers (Google Fonts) for timer/headings, Inter for body/UI text, JetBrains Mono as monospace fallback for timer numbers
+- [ ] 4.2 Set up Tailwind superhero comic color palette (dark theme base: near-black/dark-purple, phase colors: crimson/cyan/gold, accents: electric cyan/magenta/yellow)
+- [ ] 4.3 Create comic CSS utilities: halftone dot patterns (radial gradients), speed lines (conic gradients), offset drop shadows, thick comic borders (2-4px)
+- [ ] 4.4 Create root layout with dark-first theme support and comic styling context
+- [ ] 4.5 Build bottom tab navigation for mobile (comic panel segments with thick borders, active tab glow)
+- [ ] 4.6 Build sidebar navigation for desktop (Bangers font section headers, neon accent bar on active item)
+- [ ] 4.7 Create responsive layout containers with comic spacing (4px base, comic panel padding, section gaps)
+- [ ] 4.8 Implement dark/light theme toggle (dark = neon-lit comic panel, light = printed comic page)
+- [ ] 4.9 Build comic panel card component (thick black borders, offset drop shadows, halftone background texture, rounded-md)
+- [ ] 4.10 Create loading states and skeleton screens with comic styling
+- [ ] 4.11 Build error boundary components and error pages
+- [ ] 4.12 Set up toast notification system (shadcn/ui toast with comic styling)
+- [ ] 4.13 Create comic text burst component for key moments (GO!, REST!, DONE! with starburst/speed-line CSS animations)
+- [ ] 4.14 Add prefers-reduced-motion support (disable speed lines, halftone animations, text bursts)
+- [ ] 4.15 Verify accessibility (keyboard navigation, ARIA labels, focus indicators, 4.5:1 contrast on neon-on-dark)
 
 ## 5. Timer Core Functionality
 - [ ] 5.1 Create timer types and interfaces (TimerConfig, TimerState, WorkoutPhase)

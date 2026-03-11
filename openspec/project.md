@@ -252,7 +252,7 @@ Track where core technologies are used. Update this when technologies change.
 - Layouts: `src/app/` (Next.js app router layouts)
 
 **Styling:**
-- Tailwind Config: `tailwind.config.ts`
+- Tailwind Config: CSS-first via `@theme` in `src/app/globals.css` (Tailwind v4)
 - Global Styles: `src/app/globals.css`
 - Component Styles: Inline Tailwind classes
 
